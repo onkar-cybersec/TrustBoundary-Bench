@@ -91,6 +91,9 @@ notebook are needed.
 Transport failures stop the run and save partial outputs; they never turn into
 an apparently complete successful benchmark. Checkpoints resume completed calls
 for the same model/dataset hash; changing dataset size starts a different run.
+On Kaggle/Linux, a 120-second signal deadline bounds each synchronous request.
+It requires the main notebook thread and restores an existing signal timer.
+The offline Windows shim does not make remote requests or enforce this deadline.
 Do not combine pilot and full-run scores as independent samples.
 
 Integration reference: [Kaggle Benchmarks SDK](https://github.com/Kaggle/kaggle-benchmarks).

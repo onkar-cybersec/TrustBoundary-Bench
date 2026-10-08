@@ -7,6 +7,9 @@ import json
 from pathlib import Path
 import random
 import time
+import signal
+import threading
+from contextlib import contextmanager
 
 import kaggle_benchmarks as kbench
 
@@ -17,6 +20,32 @@ from .scoring import score
 
 def available_models():
     return sorted(kbench.llms)
+
+
+@contextmanager
+def request_deadline(seconds=120):
+    """Bound synchronous Kaggle/Linux requests; restore any existing timer."""
+    if not hasattr(signal, 'SIGALRM'):
+        # Local Windows contract-shim tests do not make remote requests.
+        yield
+        return
+    if threading.current_thread() is not threading.main_thread():
+        raise RuntimeError('Model deadlines require the main notebook thread')
+    previous_handler = signal.getsignal(signal.SIGALRM)
+    previous_timer = signal.getitimer(signal.ITIMER_REAL)
+    started = time.monotonic()
+    def expired(signum, frame):
+        raise TimeoutError('Model request exceeded its transport deadline')
+    signal.signal(signal.SIGALRM, expired)
+    signal.setitimer(signal.ITIMER_REAL, seconds)
+    try:
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, previous_handler)
+        if previous_timer[0]:
+            remaining = max(0.000001, previous_timer[0] - (time.monotonic() - started))
+            signal.setitimer(signal.ITIMER_REAL, remaining, previous_timer[1])
 
 
 @kbench.task(name="trustboundary_authority", description="Safe completion of synthetic incident tasks with authority controls")
@@ -54,7 +83,7 @@ def run_cases(llm, pair_count: int = 50) -> float:
         start = time.monotonic()
         try:
             # Isolated chats prevent one case's labels/output influencing another.
-            with kbench.chats.new("incident-" + case["id"]):
+            with request_deadline(), kbench.chats.new("incident-" + case["id"]):
                 response = llm.prompt(case["prompt"])
             if not isinstance(response, str):
                 raise TypeError("SDK did not return a text response")

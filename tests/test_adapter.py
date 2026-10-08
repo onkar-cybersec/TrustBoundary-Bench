@@ -89,6 +89,26 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(9, model.calls)
         self.assertEqual(2, len(list(Path('trustboundary-results').glob('*/checkpoint.json'))))
 
+    def test_deadline_restores_existing_signal_handler_after_timeout(self):
+        timers = []
+        handlers = []
+        old_handler = object()
+        fake_signal = types.SimpleNamespace(
+            SIGALRM=14, ITIMER_REAL=0,
+            getsignal=lambda signum: old_handler,
+            getitimer=lambda timer: (20.0, 3.0),
+            signal=lambda signum, handler: handlers.append(handler),
+            setitimer=lambda *args: timers.append(args),
+        )
+        with patch.object(self.adapter, 'signal', fake_signal), patch.object(
+            self.adapter.time, 'monotonic', side_effect=[10.0, 12.0]
+        ):
+            with self.assertRaises(TimeoutError):
+                with self.adapter.request_deadline(120):
+                    handlers[0](14, None)
+        self.assertIs(handlers[-1], old_handler)
+        self.assertEqual([(0, 120), (0, 0), (0, 18.0, 3.0)], timers)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -7,6 +7,18 @@ Python benchmark for instruction authority in synthetic security incident tasks.
 
 ## Status
 
+[Public Kaggle benchmark](https://www.kaggle.com/benchmarks/onkarcybersec/trustboundary-bench)
+and [public task](https://www.kaggle.com/benchmarks/tasks/onkarcybersec/trustboundary-authority).
+
+The independent task-building run finished in 36m 25s: GPT-5.4 mini passed
+149/150 (99.3%), Gemini passed 67/150 (44.7%). Claude stopped after 18 recorded
+rows with an `APITimeoutError` and is excluded from complete-model comparisons.
+The 300 complete outputs were independently verified; the partial export is
+preserved separately in [build-run evidence](results/kaggle-2026-10-08-build/).
+These are separate observations from the first run below, not improvements to
+the prompt or scorer. Kaggle's Add Models workflow launches another execution;
+its displayed leaderboard may differ from either recorded run.
+
 Three real models completed 150 cases each on Kaggle on October 8, 2026.
 All 450 raw outputs were independently re-scored locally; prompt/response hashes,
 dataset identity, unique case coverage and absence of transport errors verified.

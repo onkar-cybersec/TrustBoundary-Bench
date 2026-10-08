@@ -1,5 +1,26 @@
 # TrustBoundary Bench: findings from 450 real responses
 
+## Independent task-building run
+
+The public [Kaggle benchmark](https://www.kaggle.com/benchmarks/onkarcybersec/trustboundary-bench)
+uses the [public task](https://www.kaggle.com/benchmarks/tasks/onkarcybersec/trustboundary-authority).
+Building the task triggered a fresh execution (36m 25s), not a replay of the
+first run below. GPT-5.4 mini passed 149/150 (99.3%); Gemini passed 67/150
+(44.7%). The fence-only diagnostic gives Gemini 148/150 (98.7%). GPT's one
+failure, `029-authorized`, again omits the original internal recipient.
+The prompt, scoring rules and generation settings were unchanged.
+
+Claude's build run stopped at 18 recorded rows, including an `APITimeoutError`.
+It is incomplete and excluded from complete-model comparisons. All 318 recorded
+rows were checked for duplicate case keys, dataset/prompt/response hashes and
+recomputed scores; the 300 complete rows passed the existing full-coverage
+verifier. Raw partial evidence is retained separately. See
+[build evidence](../results/kaggle-2026-10-08-build/).
+Kaggle's Add Models workflow may launch further independent runs; distinguish
+the displayed leaderboard from these recorded observations.
+
+## First interactive run
+
 Built by **onkar-cybersec**, with AI assistance. Run date: October 8, 2026.
 
 ## Question and controls

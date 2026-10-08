@@ -1,0 +1,206 @@
+{
+  "verified_rows": 450,
+  "primary": {
+    "google/gemini-2.5-flash": {
+      "n": 150,
+      "valid_n": 50,
+      "injected_n": 50,
+      "invalid_n": 100,
+      "safe_completion": 0.3333333333333333,
+      "safe_completion_wilson_95": [
+        0.2628864565745068,
+        0.41210392314073274
+      ],
+      "goal_completion": 0.3333333333333333,
+      "unauthorized_attempt_valid_only": 0.0,
+      "attack_followed_valid_injected_only": 0.0,
+      "valid_injected_n": 17,
+      "canary_leak_n": 0,
+      "explicit_refusal_valid_only": 0.0,
+      "complete_triplets_n": 50,
+      "triplet_safe_completion": 0.02,
+      "by_condition": {
+        "clean": {
+          "n": 50,
+          "safe_completion": 0.32
+        },
+        "injected": {
+          "n": 50,
+          "safe_completion": 0.34
+        },
+        "authorized": {
+          "n": 50,
+          "safe_completion": 0.34
+        }
+      }
+    },
+    "openai/gpt-5.4-mini-2026-03-17": {
+      "n": 150,
+      "valid_n": 150,
+      "injected_n": 50,
+      "invalid_n": 0,
+      "safe_completion": 0.98,
+      "safe_completion_wilson_95": [
+        0.9428523341357583,
+        0.9931753722843516
+      ],
+      "goal_completion": 0.98,
+      "unauthorized_attempt_valid_only": 0.0,
+      "attack_followed_valid_injected_only": 0.0,
+      "valid_injected_n": 50,
+      "canary_leak_n": 0,
+      "explicit_refusal_valid_only": 0.0,
+      "complete_triplets_n": 50,
+      "triplet_safe_completion": 0.94,
+      "by_condition": {
+        "clean": {
+          "n": 50,
+          "safe_completion": 1.0
+        },
+        "injected": {
+          "n": 50,
+          "safe_completion": 1.0
+        },
+        "authorized": {
+          "n": 50,
+          "safe_completion": 0.94
+        }
+      }
+    },
+    "anthropic/claude-haiku-4-5@20251001": {
+      "n": 150,
+      "valid_n": 0,
+      "injected_n": 50,
+      "invalid_n": 150,
+      "safe_completion": 0.0,
+      "safe_completion_wilson_95": [
+        0,
+        0.02497113914571871
+      ],
+      "goal_completion": 0.0,
+      "unauthorized_attempt_valid_only": null,
+      "attack_followed_valid_injected_only": null,
+      "valid_injected_n": 0,
+      "canary_leak_n": 0,
+      "explicit_refusal_valid_only": null,
+      "complete_triplets_n": 50,
+      "triplet_safe_completion": 0.0,
+      "by_condition": {
+        "clean": {
+          "n": 50,
+          "safe_completion": 0.0
+        },
+        "injected": {
+          "n": 50,
+          "safe_completion": 0.0
+        },
+        "authorized": {
+          "n": 50,
+          "safe_completion": 0.0
+        }
+      }
+    }
+  },
+  "post_hoc_outer_json_fence_removal": {
+    "google/gemini-2.5-flash": {
+      "n": 150,
+      "valid_n": 148,
+      "injected_n": 50,
+      "invalid_n": 2,
+      "safe_completion": 0.9866666666666667,
+      "safe_completion_wilson_95": [
+        0.9526921436197238,
+        0.9963359476117768
+      ],
+      "goal_completion": 0.9866666666666667,
+      "unauthorized_attempt_valid_only": 0.0,
+      "attack_followed_valid_injected_only": 0.0,
+      "valid_injected_n": 48,
+      "canary_leak_n": 0,
+      "explicit_refusal_valid_only": 0.0,
+      "complete_triplets_n": 50,
+      "triplet_safe_completion": 0.96,
+      "by_condition": {
+        "clean": {
+          "n": 50,
+          "safe_completion": 1.0
+        },
+        "injected": {
+          "n": 50,
+          "safe_completion": 0.96
+        },
+        "authorized": {
+          "n": 50,
+          "safe_completion": 1.0
+        }
+      }
+    },
+    "openai/gpt-5.4-mini-2026-03-17": {
+      "n": 150,
+      "valid_n": 150,
+      "injected_n": 50,
+      "invalid_n": 0,
+      "safe_completion": 0.98,
+      "safe_completion_wilson_95": [
+        0.9428523341357583,
+        0.9931753722843516
+      ],
+      "goal_completion": 0.98,
+      "unauthorized_attempt_valid_only": 0.0,
+      "attack_followed_valid_injected_only": 0.0,
+      "valid_injected_n": 50,
+      "canary_leak_n": 0,
+      "explicit_refusal_valid_only": 0.0,
+      "complete_triplets_n": 50,
+      "triplet_safe_completion": 0.94,
+      "by_condition": {
+        "clean": {
+          "n": 50,
+          "safe_completion": 1.0
+        },
+        "injected": {
+          "n": 50,
+          "safe_completion": 1.0
+        },
+        "authorized": {
+          "n": 50,
+          "safe_completion": 0.94
+        }
+      }
+    },
+    "anthropic/claude-haiku-4-5@20251001": {
+      "n": 150,
+      "valid_n": 143,
+      "injected_n": 50,
+      "invalid_n": 7,
+      "safe_completion": 0.9533333333333334,
+      "safe_completion_wilson_95": [
+        0.9068124260764263,
+        0.9772137410981221
+      ],
+      "goal_completion": 0.9533333333333334,
+      "unauthorized_attempt_valid_only": 0.0,
+      "attack_followed_valid_injected_only": 0.0,
+      "valid_injected_n": 43,
+      "canary_leak_n": 0,
+      "explicit_refusal_valid_only": 0.0,
+      "complete_triplets_n": 50,
+      "triplet_safe_completion": 0.86,
+      "by_condition": {
+        "clean": {
+          "n": 50,
+          "safe_completion": 1.0
+        },
+        "injected": {
+          "n": 50,
+          "safe_completion": 0.86
+        },
+        "authorized": {
+          "n": 50,
+          "safe_completion": 1.0
+        }
+      }
+    }
+  },
+  "diagnostic_note": "Only one complete outer Markdown JSON fence is removed. This post-hoc sensitivity analysis is not the primary Kaggle score or a new model run."
+}

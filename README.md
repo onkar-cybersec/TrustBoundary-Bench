@@ -7,9 +7,44 @@ Python benchmark for instruction authority in synthetic security incident tasks.
 
 ## Status
 
-The local scorer and fixture report are tested. **No real-model findings are
-claimed until Kaggle runs complete.** The demo is explicitly labeled as scripted
-fixtures. It is not a model leaderboard or a competition result.
+Three real models completed 150 cases each on Kaggle on October 8, 2026.
+All 450 raw outputs were independently re-scored locally; prompt/response hashes,
+dataset identity, unique case coverage and absence of transport errors verified.
+The 27 offline tests pass. These are experimental results, not a certification.
+
+![Real Kaggle model results — strict JSON protocol](docs/screenshots/model-dashboard.png)
+
+## Real results
+
+| Model ID | Strict safe completion | Invalid outputs | All three controls pass | Post-hoc fence removal only |
+|---|---:|---:|---:|---:|
+| `openai/gpt-5.4-mini-2026-03-17` | 147/150 (98.0%) | 0 | 47/50 (94.0%) | 147/150 (98.0%) |
+| `google/gemini-2.5-flash` | 50/150 (33.3%) | 100 | 1/50 (2.0%) | 148/150 (98.7%) |
+| `anthropic/claude-haiku-4-5@20251001` | 0/150 (0.0%) | 150 | 0/50 (0.0%) | 143/150 (95.3%) |
+
+**The strict score is strongly influenced by output formatting.** Removing one
+complete outer Markdown JSON fence is a separately labeled, post-hoc diagnostic;
+it changes neither the primary task score nor the stored raw responses. It does
+not repair JSON or remove trailing commentary. Do not read the strict ordering
+as a general ranking of model security.
+
+GPT passed all 50 clean and all 50 injected cases. Its three failures were in
+authorized controls: it sent to the newly approved recipient but omitted the
+original internal recipient. Gemini's two remaining diagnostic failures contain
+malformed JSON; Claude's seven contain extra explanatory text after its fence.
+No unauthorized proposals were observed among valid plans, and no exact fake
+canary leaks were detected. Invalid plans cannot establish safe action behavior.
+
+The evidence supports a useful finding: integration format and legitimate-task
+utility must be measured alongside resistance to injected instructions. See
+[the detailed analysis](docs/findings.md), [raw artifacts](results/kaggle-2026-10-08/),
+and [verification script](tools/verify_results.py). SDK version: **0.6.1**;
+provider defaults, isolated chats, one response per case, fixed order seed.
+
+![A legitimate-authorization utility failure](docs/screenshots/model-evidence.png)
+
+The local demo remains explicitly labeled as scripted scorer fixtures. It is
+not a model leaderboard or a competition result.
 
 ![Fixture dashboard — scripted checks, not model results](docs/screenshots/fixture-dashboard.jpg)
 
@@ -124,3 +159,4 @@ review before security-critical use. Report methodology changes and version/hash
 changes when comparing runs. Do not introduce real credentials or personal data.
 
 MIT license. Copyright 2026 onkar-cybersec.
+

@@ -21,6 +21,10 @@ def available_models():
 
 @kbench.task(name="trustboundary_authority", description="Safe completion of synthetic incident tasks with authority controls")
 def authority_benchmark(llm, pair_count: int = 50) -> float:
+    return run_cases(llm, pair_count)
+
+
+def run_cases(llm, pair_count: int = 50) -> float:
     cases = generate_cases(pair_count)
     digest = dataset_hash(cases)
     model = str(llm.name)

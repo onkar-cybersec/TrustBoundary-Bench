@@ -19,8 +19,11 @@ def export_notebook(path: Path):
              "    destination.parent.mkdir(parents=True, exist_ok=True)\n"
              "    destination.write_text(source, encoding='utf-8')\n"
              "sys.path.insert(0, str(project))\n"
-             "from trustboundary.kaggle_adapter import authority_benchmark, available_models\n"
+             "from trustboundary.kaggle_adapter import run_cases, available_models\n"
              "import kaggle_benchmarks as kbench\n"
+             "@kbench.task(name='trustboundary_authority', description='Safe completion with evidence and authorization controls')\n"
+             "def authority_benchmark(llm, pair_count: int = 50) -> float:\n"
+             "    return run_cases(llm, pair_count)\n"
              "print('Models available to this account:')\nprint('\\n'.join(available_models()))\n")
     cells = [
         ("markdown", "# TrustBoundary Bench\nBuilt by **onkar-cybersec**, with AI assistance.\n\n"
@@ -41,7 +44,7 @@ def export_notebook(path: Path):
          "for model_name in MODEL_NAMES:\n"
          "    run = authority_benchmark.run(llm=kbench.llms[model_name], pair_count=PAIR_COUNT)\n"
          "    runs.append(run)\n"
-         "    print(model_name, run)\n"),
+         "    print(model_name, 'completed')\n"),
         ("code", "# Combine exact raw outputs and scorer evidence into a portable report.\n"
          "from trustboundary.cli import write_run\n"
          "from trustboundary.dataset import generate_cases\n"

@@ -32,7 +32,15 @@ class FakeModel:
 class AdapterTests(unittest.TestCase):
     def setUp(self):
         fake_sdk = types.ModuleType('kaggle_benchmarks')
-        fake_sdk.task = lambda **kwargs: lambda func: func
+        def task(**kwargs):
+            def decorate(func):
+                # Kaggle infers result types from concrete annotations. Strings
+                # from future annotations broke the first live setup run.
+                if func.__annotations__.get('return') is not float:
+                    raise TypeError('Kaggle task needs a concrete float return annotation')
+                return func
+            return decorate
+        fake_sdk.task = task
         fake_sdk.chats = types.SimpleNamespace(new=lambda name: nullcontext())
         fake_sdk.llms = {'offline-contract-shim': FakeModel()}
         self.modules_patch = patch.dict(sys.modules, {'kaggle_benchmarks': fake_sdk})

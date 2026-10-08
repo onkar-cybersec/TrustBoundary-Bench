@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trustboundary-bench"
+version = "0.1.0"
+description = "Reproducible synthetic evaluations of AI instruction authority"
+requires-python = ">=3.10"
+authors = [{name = "onkar-cybersec"}]
+license = {text = "MIT"}
+dependencies = []
+
+[project.scripts]
+trustboundary = "trustboundary.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["trustboundary*"]

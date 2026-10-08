@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+.env
+.env.*
+outputs/
+trustboundary-results/
+trustboundary-combined/
+*.checkpoint.json
